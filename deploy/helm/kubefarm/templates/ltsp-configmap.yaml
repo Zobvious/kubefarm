@@ -85,6 +85,7 @@ data:
     mkdir -p /etc/docker
     cp -f /etc/ltsp/docker.json /etc/docker/daemon.json
     {{- end }}
+    rm /etc/containerd/config.toml
 
     # Setup services
     for svc in /etc/ltsp/*.service; do
