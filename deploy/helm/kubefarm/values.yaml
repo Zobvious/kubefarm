@@ -75,7 +75,7 @@ ltsp:
 
     # SSH-keys authorized to access the nodes
     sshAuthorizedKeys: 
-      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC40xSQIYc7ou4fH/5vPccgXeu+uQGBZSHNd2jIOMhUSOo2zR1+aT+geVlfJ9y1EmK+xkyVQKnxCPz3CpbxThZwaO2NXQmxg6OvLek1VShBG0SvbB4GRbckeXBIw4IDgLi3WMLZP0eK/BFk3l5mgdPBzivgrT1tNxcfsCIZtrXPSn3M0AKWAKPlmo/DpUxTFktwO2K88zHinybjeqd1rT03VbB8h31rmn4ytnRc9aeMqWN9ejnkVdO4h2U9zphNn/EgjwoG8cNBCeS5iRBXqpw/euPLmZqKWmdV2e+D+5jRTMULExlJIrX3aeVO9qfMtjfSWLI/EA5f6V3vhi/2T5XWlQQzbLa4SMTaQogcT52SGixM35l1WSMFzdRvedHckN8RQL//Z+HlOj/QQCQnWnqurZgI3ocGxAkukxrv4LGTz5t6jYM4RMDDtpZmq3kyoWuAhLo4XNFCL5YX8Be6OIkTAy/4WoDi8YaQpoqHiOvdrT8PEY2n67fEpzxQYSt652M=
+      #- ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAA ---- ZOBINET
 
     # Hashed password for root, use `openssl passwd -1` to generate one
     rootPasswd: $1$jaKnTiEb$IhpsNUfssXQ8eQg8orald0 # hackme
