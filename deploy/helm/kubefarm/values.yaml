@@ -4,7 +4,7 @@
 kubernetes:
   enabled: true
   # See all available options for kubernetes-in-kubernetes chart on:
-  # https://github.com/kubefarm/kubernetes-in-kubernetes/blob/master/deploy/helm/kubernetes/values.yaml
+  # https://github.com/kvaps/kubernetes-in-kubernetes/blob/master/deploy/helm/kubernetes/values.yaml
 
   persistence:
     enabled: true
@@ -17,14 +17,14 @@ kubernetes:
       loadBalancerIP:
 
     # Specify external endpoints here to have an oportunity to the Kubernetes cluster externaly
-    #certSANs:
-    #  ipAddresses:
-    #  - 10.9.8.10
+    certSANs:
+      ipAddresses:
+      - 192.168.8.150
     #  dnsNames:
     #  - mycluster.example.org
-    #extraArgs:
+    extraArgs:
     #  # advertise-address is required for kube-proxy
-    #  advertise-address: 10.9.8.10
+      advertise-address: 192.168.8.150
 
 # ------------------------------------------------------------------------------
 # Kubeadm token generator
@@ -74,11 +74,11 @@ ltsp:
     #timezone: UTC
 
     # SSH-keys authorized to access the nodes
-    sshAuthorizedKeys: []
-      #- ssh-rsa AAAAB3N...
+    sshAuthorizedKeys: 
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC40xSQIYc7ou4fH/5vPccgXeu+uQGBZSHNd2jIOMhUSOo2zR1+aT+geVlfJ9y1EmK+xkyVQKnxCPz3CpbxThZwaO2NXQmxg6OvLek1VShBG0SvbB4GRbckeXBIw4IDgLi3WMLZP0eK/BFk3l5mgdPBzivgrT1tNxcfsCIZtrXPSn3M0AKWAKPlmo/DpUxTFktwO2K88zHinybjeqd1rT03VbB8h31rmn4ytnRc9aeMqWN9ejnkVdO4h2U9zphNn/EgjwoG8cNBCeS5iRBXqpw/euPLmZqKWmdV2e+D+5jRTMULExlJIrX3aeVO9qfMtjfSWLI/EA5f6V3vhi/2T5XWlQQzbLa4SMTaQogcT52SGixM35l1WSMFzdRvedHckN8RQL//Z+HlOj/QQCQnWnqurZgI3ocGxAkukxrv4LGTz5t6jYM4RMDDtpZmq3kyoWuAhLo4XNFCL5YX8Be6OIkTAy/4WoDi8YaQpoqHiOvdrT8PEY2n67fEpzxQYSt652M=
 
     # Hashed password for root, use `openssl passwd -1` to generate one
-    #rootPasswd: $1$jaKnTiEb$IhpsNUfssXQ8eQg8orald0 # hackme
+    rootPasswd: $1$jaKnTiEb$IhpsNUfssXQ8eQg8orald0 # hackme
 
     # Sysctl setting for the nodes
     sysctls:
@@ -88,10 +88,10 @@ ltsp:
     # Modules to load during startup
     modules:
       - br_netfilter
-      #- ip_vs
-      #- ip_vs_rr
-      #- ip_vs_wrr
-      #- ip_vs_sh
+      - ip_vs
+      - ip_vs_rr
+      - ip_vs_wrr
+      - ip_vs_sh
 
     # Docker configuration file
     dockerConfig:
@@ -143,7 +143,7 @@ nodePools:
     #   172.16.0.1,172.16.0.100,255.255.255.0,172.16.0.255,1h
     #
     # WARNING setting broadcast-address is required! (see: https://www.mail-archive.com/dnsmasq-discuss@lists.thekelleys.org.uk/msg14137.html)
-    range: ""
+    range: "192.168.8.161,192.168.8.170,255.255.255.0,192.168.8.255,1h"
 
     # DHCP configuration for each node
     nodes: []
@@ -154,18 +154,19 @@ nodePools:
     # Extra tags applied to this node pool, tags may contain additional
     # DHCP- and LTSP- options as well node labels and taints
     tags:
-      #- debug
+      - debug
       #- foo
 
     # Extra Options for Dnsmasq. This section can be used to setup Circuit ID matching.
     # Note: Symbol '?' will automatically be replaced by the '{{ .Release.Name }}-ltsp' tag.
-    extraOpts: []
+    extraOpts: 
       #- dhcp-circuitid: "set:port_0,ge-0/0/0.0:staging"
       #- dhcp-circuitid: "set:port_1,ge-0/0/1.0:staging"
       #- dhcp-range: "set:?,tag:port_0,192.168.11.10,192.168.11.10,255.255.255.0"
       #- dhcp-range: "set:?,tag:port_1,192.168.11.11,192.168.11.11,255.255.255.0"
       #- tag-if: "set:bar,tag:?,tag:port_0"
       #- tag-if: "set:bar,tag:?,tag:port_1"
+      - dhcp-boot: "ltsp/grub/i386-pc/core.0,boothost,192.168.8.151"
 
 # ------------------------------------------------------------------------------
 # Extra options can be specified for each tag
@@ -175,9 +176,9 @@ tags:
   dhcpOptions:
     # dnsmasq options
     # see all available options list (https://git.io/JJ0dH)
-    all: {}
-      #router: 172.16.0.1
-      #dns-server: 8.8.8.8
+    all: 
+      router: 192.168.8.254
+      dns-server: 8.8.8.8
       #broadcast: 172.16.0.255
       #domain-search: infra.example.org
 
@@ -185,7 +186,10 @@ tags:
     all:
       FSTAB_KUBELET: "tmpfs /var/lib/kubelet tmpfs x-systemd.wanted-by=kubelet.service 0 0"
       FSTAB_DOCKER: "tmpfs /var/lib/docker tmpfs x-systemd.wanted-by=docker.service 0 0"
+      FSTAB_CONTAINERD: "tmpfs /var/lib/containerd tmpfs x-systemd.wanted-by=docker.service 0 0"
       KUBELET_EXTRA_ARGS_CGROUP: "--cgroup-driver=systemd"
+      LOCALDEV: "True"
+
     debug:
       DEBUG_SHELL: "1"
 
