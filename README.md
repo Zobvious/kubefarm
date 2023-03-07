@@ -87,8 +87,8 @@ There is a number of dependencies needed to make kubefarm work:
   You also need an automated, external IP-address maganement. MetalLB is able to provide this.
   
   ```bash
-  kubectl apply -f https://github.com/metallb/metallb/raw/v0.10.2/manifests/namespace.yaml
-  kubectl apply -f https://github.com/metallb/metallb/raw/v0.10.2/manifests/metallb.yaml
+  helm repo add metallb https://metallb.github.io/metallb
+  helm install metallb metallb/metallb
   ```
 
   Also [configure MetalLB Layer 2 address range](https://metallb.universe.tf/configuration/#layer-2-configuration) after the installation.  
@@ -111,7 +111,7 @@ There is a number of dependencies needed to make kubefarm work:
     -f https://github.com/kubefarm/dnsmasq-controller/raw/master/config/rbac/service_account.yaml \
     -f https://github.com/kubefarm/dnsmasq-controller/raw/master/config/rbac/role.yaml \
     -f https://github.com/kubefarm/dnsmasq-controller/raw/master/config/rbac/leader_election_role.yaml \
-    -f https://github.com/kubefarm/dnsmasq-controller/raw/master/config/controller/dhcp-server.yaml
+    -f https://github.com/kubefarm/dnsmasq-controller/raw/master/config/dhcp-server/dhcp-server.yaml
   kubectl label node --all node-role.kubernetes.io/dnsmasq=
   ```
   
