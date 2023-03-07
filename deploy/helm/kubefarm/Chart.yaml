@@ -6,11 +6,11 @@ icon: https://avatars1.githubusercontent.com/u/68351149?s=150&u=b8b4cb0f36428127
 keywords:
   - kubernetes
   - ltsp
-home: https://github.com/kubefarm/kubefarm
+home: https://github.com/Zobvious/kubefarm
 sources:
-  - https://github.com/kubefarm/kubefarm
+  - https://github.com/Zobvious/kubefarm
 maintainers:
-  - name: kvaps
+  - name: enguerr
     email: kvapss@gmail.com
   - name: krakazyabra
     email: pronin.egor@gmail.com
