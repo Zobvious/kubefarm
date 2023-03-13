@@ -161,9 +161,8 @@ helm install komonveuh . \
 ```
 to upgrade
 ```bash
-helm install komonveuh . \
+helm upgrade komonveuh . \
   --namespace komonveuh \
-  --create-namespace \
   -f values.yaml
 ```
 
