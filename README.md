@@ -142,11 +142,27 @@ kubectl apply -n dnsmasq -f https://github.com/kubefarm/kubefarm/raw/master/depl
 Spawn a new cluster:
 
 ```bash
-helm repo add kvaps https://kvaps.github.io/charts
-helm show values kvaps/kubefarm --version 0.13.4 > values.yaml
-${EDITOR} values.yaml
-helm install ${cluster_name} kvaps/kubefarm --version 0.13.4 \
-  --namespace kubefarm-cluster1 \
+
+#helm repo add kvaps https://kvaps.github.io/charts
+#helm show values kvaps/kubefarm --version 0.13.4 > values.yaml
+
+git clone https://github.com/Zobvious/kubefarm
+cd kubefarm/deploy/helm/kubefarm
+vi values.yaml
+cd vendor/github.com/kubefarm
+git clone https://github.com/Zobvious/kubernetes-in-kubernetes
+cd ../../..
+
+
+helm install komonveuh . \
+  --namespace komonveuh \
+  --create-namespace \
+  -f values.yaml
+```
+to upgrade
+```bash
+helm install komonveuh . \
+  --namespace komonveuh \
   --create-namespace \
   -f values.yaml
 ```
