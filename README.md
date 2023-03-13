@@ -119,6 +119,11 @@ There is a number of dependencies needed to make kubefarm work:
     -f https://github.com/kubefarm/dnsmasq-controller/raw/master/config/dhcp-server/dhcp-server.yaml
   kubectl label node --all node-role.kubernetes.io/dnsmasq=
   ```
+  if you use libvirt. Please disable the default network
+  ```
+  virsh net-destroy default
+  virsh net-autostart --disable default
+  ```
   
 You also need to deploy basic platform matchers for DHCP. They allow you to detect the clients architecture (PC or EFI) to allow sending proper bootloader binaries:
 
