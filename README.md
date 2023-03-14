@@ -93,7 +93,7 @@ There is a number of dependencies needed to make kubefarm work:
   
   ```bash
   helm repo add metallb https://metallb.github.io/metallb
-  helm install metallb metallb/metallb
+  helm install metallb metallb/metallb -n metallb --create-namespace
   ```
 
   Also [configure MetalLB Layer 2 address range](https://metallb.universe.tf/configuration/#layer-2-configuration) after the installation.  
