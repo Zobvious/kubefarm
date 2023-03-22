@@ -69,6 +69,9 @@ There is a number of dependencies needed to make kubefarm work:
   The cert-manager issues the certificates for Kubernetes-in-Kubernetes and its etcd-cluster.
   
   ```bash
+  
+  helm repo add jetstack https://charts.jetstack.io
+  
    helm install \
     cert-manager jetstack/cert-manager \
     --namespace cert-manager \
