@@ -80,16 +80,18 @@ There is a number of dependencies needed to make kubefarm work:
     --set installCRDs=true
   ```
   
-* **[Local Path Provisioner]**
+* **[ROOK CEPH MASTER]**
 
-  You need an automated, persistent volumes management for your cluster. Local-path-provisioner is the simpliest way to achieve that.
+  You need an automated, persistent volumes management for your cluster. Local-path-provisioner is stupid bullshit. We choose to install CEPH cluster on the master kubefarm in order to server RBD on the provisionned nodes
 
   ```bash
-  kubectl apply -f https://github.com/rancher/local-path-provisioner/raw/master/deploy/local-path-storage.yaml
+  helm repo add rook-release https://charts.rook.io/release
+  helm install --create-namespace --namespace rook-ceph rook-ceph rook-release/rook-ceph -f ceph-master/values.yaml
+  helm install --create-namespace --namespace rook-ceph-cluster rook-ceph-cluster \
+   --set operatorNamespace=rook-ceph rook-release/rook-ceph-cluster -f ceph-master/values-cluster.yaml
   ```
 
-  Optionaly, any other csi-driver can be used.
-  
+    
 * **[MetalLB]**
 
   You also need an automated, external IP-address maganement. MetalLB is able to provide this.
@@ -197,6 +199,7 @@ To achieve that you need to specify the correct hostname or IP address for the `
     ```
 
   You only need to correct the server address in it.
+
 
 ## License
 
